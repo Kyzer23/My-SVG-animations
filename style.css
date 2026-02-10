@@ -1,0 +1,354 @@
+/* ========================================
+   ROOT VARIABLES - Cyberpunk Color Scheme
+   ======================================== */
+:root {
+    --primary-cyan: #00ffc8;
+    --primary-purple: #7b2ff7;
+    --primary-pink: #ff0080;
+    --dark-bg: #0a0e27;
+    --darker-bg: #050811;
+    --text-light: #e0e0ff;
+    --glow-cyan: rgba(0, 255, 200, 0.5);
+    --glow-purple: rgba(123, 47, 247, 0.5);
+}
+
+/* ========================================
+   BODY & GLOBAL STYLES
+   ======================================== */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    background-attachment: fixed;
+    font-family: 'Space Mono', monospace;
+    color: var(--text-light);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Animated background grid effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 200, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 200, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+.title-glow {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--primary-cyan);
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    text-shadow: 
+        0 0 10px var(--glow-cyan),
+        0 0 20px var(--glow-cyan),
+        0 0 30px var(--glow-cyan),
+        0 0 40px rgba(0, 255, 200, 0.3);
+    animation: titlePulse 3s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px var(--glow-cyan),
+            0 0 20px var(--glow-cyan),
+            0 0 30px var(--glow-cyan);
+    }
+    50% {
+        text-shadow: 
+            0 0 15px var(--glow-cyan),
+            0 0 30px var(--glow-cyan),
+            0 0 45px var(--glow-cyan),
+            0 0 60px rgba(0, 255, 200, 0.4);
+    }
+}
+
+.instruction-text {
+    color: var(--text-light);
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    font-size: 1.1rem;
+}
+
+/* ========================================
+   SVG CONTAINER & CANVAS
+   ======================================== */
+.svg-wrapper {
+    background: rgba(10, 14, 39, 0.5);
+    border-radius: 20px;
+    border: 2px solid rgba(0, 255, 200, 0.2);
+    box-shadow: 
+        0 0 20px rgba(0, 255, 200, 0.1),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+}
+
+.svg-wrapper:hover {
+    border-color: rgba(0, 255, 200, 0.4);
+    box-shadow: 
+        0 0 40px rgba(0, 255, 200, 0.2),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.svg-canvas {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.3));
+}
+
+/* ========================================
+   SVG ELEMENTS - DEFAULT STATE
+   ======================================== */
+.spinning-circle {
+    transform-origin: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    filter: drop-shadow(0 0 8px var(--glow-cyan));
+}
+
+.orbital-ring {
+    transform-origin: center;
+    animation: pulseRing 4s ease-in-out infinite;
+}
+
+@keyframes pulseRing {
+    0%, 100% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(1.02);
+    }
+}
+
+.center-glow {
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.inner-circle {
+    transform-origin: center;
+    animation: dashRotate 10s linear infinite;
+}
+
+@keyframes dashRotate {
+    0% {
+        transform: rotate(0deg);
+        stroke-dashoffset: 0;
+    }
+    100% {
+        transform: rotate(360deg);
+        stroke-dashoffset: -20;
+    }
+}
+
+.circle-label {
+    font-family: 'Orbitron', sans-serif;
+    pointer-events: none;
+    animation: labelFloat 2s ease-in-out infinite;
+}
+
+@keyframes labelFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* ========================================
+   SPIN ANIMATION - Core Rotation
+   ======================================== */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================
+   HOVER STATE - Spinning Circle
+   ======================================== */
+.spinning-circle:hover {
+    animation: spin 2s linear infinite;
+    filter: drop-shadow(0 0 20px var(--glow-purple));
+}
+
+/* Additional hover effect for the stroke gradient */
+.spinning-circle:hover ~ .orbital-ring {
+    opacity: 0.6;
+    animation: pulseRing 1s ease-in-out infinite, spinReverse 4s linear infinite;
+}
+
+@keyframes spinReverse {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+/* ========================================
+   ACTIVE/SPINNING CLASS (JavaScript Toggle)
+   ======================================== */
+.spinning-circle.active-spin {
+    animation: spin 2s linear infinite;
+    filter: drop-shadow(0 0 20px var(--glow-purple));
+}
+
+.spinning-circle.active-spin ~ .center-glow {
+    animation: glowPulse 0.5s ease-in-out infinite, colorCycle 3s linear infinite;
+}
+
+@keyframes colorCycle {
+    0% {
+        opacity: 0.6;
+    }
+    33% {
+        opacity: 0.8;
+    }
+    66% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* ========================================
+   INFO PANEL & STATS
+   ======================================== */
+.info-panel {
+    background: rgba(10, 14, 39, 0.3);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 255, 200, 0.15);
+    backdrop-filter: blur(5px);
+}
+
+.stat-card {
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid rgba(123, 47, 247, 0.2);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.stat-card:hover {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(123, 47, 247, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(123, 47, 247, 0.3);
+}
+
+.stat-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--primary-purple);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--glow-purple);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    opacity: 0.7;
+    margin: 0;
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATION
+   ======================================== */
+.spinning-circle,
+.orbital-ring,
+.inner-circle {
+    will-change: transform;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    .title-glow {
+        font-size: 2.5rem;
+        letter-spacing: 4px;
+    }
+    
+    .instruction-text {
+        font-size: 1rem;
+    }
+    
+    .svg-wrapper {
+        padding: 2rem !important;
+    }
+    
+    .stat-value {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .title-glow {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+    
+    .svg-canvas {
+        max-width: 300px;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY - Reduced Motion
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

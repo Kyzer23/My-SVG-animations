@@ -1,0 +1,343 @@
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  
+  <!-- Embedded Styles and Animations -->
+  <defs>
+    <!-- CSS Animations -->
+    <style>
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      @keyframes spinReverse {
+        0% { transform: rotate(360deg); }
+        100% { transform: rotate(0deg); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.8; }
+      }
+      
+      @keyframes orbitPath {
+        0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+        100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+      }
+      
+      @keyframes colorShift {
+        0% { stop-color: #00ffc8; }
+        33% { stop-color: #7b2ff7; }
+        66% { stop-color: #ff0080; }
+        100% { stop-color: #00ffc8; }
+      }
+      
+      @keyframes scaleGrow {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+      }
+      
+      /* Main Circle Styles - Default (no animation) */
+      .main-circle {
+        transform-origin: center;
+        filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.4));
+        transition: filter 0.3s ease;
+      }
+      
+      /* Outer Ring - Default (no animation) */
+      .outer-ring {
+        transform-origin: center;
+        stroke-dasharray: 20 10;
+      }
+      
+      /* Middle Ring - Default (no animation) */
+      .middle-ring {
+        transform-origin: center;
+        stroke-dasharray: 15 5;
+      }
+      
+      /* Inner Ring - Default (no animation) */
+      .inner-ring {
+        transform-origin: center;
+        stroke-dasharray: 10 5;
+      }
+      
+      /* Orbiting Circles - Default (no animation) */
+      .orbit-circle {
+        transform-origin: 400px 400px;
+      }
+      
+      /* Pulsing Center Glow - Default (no animation) */
+      .center-glow {
+        opacity: 0.2;
+        transition: opacity 0.3s ease;
+      }
+      
+      /* Rotating Text - Default (no animation) */
+      .rotating-text {
+        transform-origin: center;
+      }
+      
+      /* Pulsing Stars - Default (no animation) */
+      .star {
+        opacity: 0.3;
+        transition: opacity 0.3s ease;
+      }
+      
+      /* Scale animation for decorative elements - Default (no animation) */
+      .scale-element {
+        transform-origin: center;
+      }
+      
+      /* ========================================
+         HOVER STATE - Activate all animations
+         ======================================== */
+      
+      svg:hover .main-circle {
+        animation: spin 3s linear infinite;
+        filter: drop-shadow(0 0 15px rgba(0, 255, 200, 0.6));
+      }
+      
+      svg:hover .outer-ring {
+        animation: spinReverse 8s linear infinite;
+      }
+      
+      svg:hover .middle-ring {
+        animation: spin 6s linear infinite;
+      }
+      
+      svg:hover .inner-ring {
+        animation: spinReverse 4s linear infinite;
+      }
+      
+      svg:hover .orbit-circle {
+        animation: orbitPath 5s linear infinite;
+      }
+      
+      svg:hover .center-glow {
+        animation: pulse 2s ease-in-out infinite;
+        opacity: 0.4;
+      }
+      
+      svg:hover .rotating-text {
+        animation: spin 10s linear infinite;
+      }
+      
+      svg:hover .star {
+        animation: pulse 3s ease-in-out infinite;
+        opacity: 0.8;
+      }
+      
+      svg:hover .star:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      
+      svg:hover .star:nth-child(3) {
+        animation-delay: 1s;
+      }
+      
+      svg:hover .star:nth-child(4) {
+        animation-delay: 1.5s;
+      }
+      
+      svg:hover .scale-element {
+        animation: scaleGrow 4s ease-in-out infinite;
+      }
+    </style>
+    
+    <!-- Gradient Definitions -->
+    <radialGradient id="mainGradient">
+      <stop offset="0%" style="stop-color:#1a1f3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </radialGradient>
+    
+    <linearGradient id="rainbowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffc8;stop-opacity:1">
+        <animate attributeName="stop-color" values="#00ffc8;#7b2ff7;#ff0080;#00ffc8" dur="6s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="50%" style="stop-color:#7b2ff7;stop-opacity:1">
+        <animate attributeName="stop-color" values="#7b2ff7;#ff0080;#00ffc8;#7b2ff7" dur="6s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%" style="stop-color:#ff0080;stop-opacity:1">
+        <animate attributeName="stop-color" values="#ff0080;#00ffc8;#7b2ff7;#ff0080" dur="6s" repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+    
+    <radialGradient id="glowGradient">
+      <stop offset="0%" style="stop-color:#00ffc8;stop-opacity:0.9" />
+      <stop offset="50%" style="stop-color:#7b2ff7;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#ff0080;stop-opacity:0" />
+    </radialGradient>
+    
+    <linearGradient id="strokeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffc8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7b2ff7;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Filter for glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Star shape -->
+    <polygon id="starShape" points="0,-10 2,-3 10,-3 4,2 6,10 0,5 -6,10 -4,2 -10,-3 -2,-3" 
+             fill="#00ffc8" opacity="0.8"/>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="800" fill="#0a0e27"/>
+  
+  <!-- Background decorative grid -->
+  <g opacity="0.1">
+    <line x1="0" y1="200" x2="800" y2="200" stroke="#00ffc8" stroke-width="1"/>
+    <line x1="0" y1="400" x2="800" y2="400" stroke="#00ffc8" stroke-width="1"/>
+    <line x1="0" y1="600" x2="800" y2="600" stroke="#00ffc8" stroke-width="1"/>
+    <line x1="200" y1="0" x2="200" y2="800" stroke="#00ffc8" stroke-width="1"/>
+    <line x1="400" y1="0" x2="400" y2="800" stroke="#00ffc8" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="800" stroke="#00ffc8" stroke-width="1"/>
+  </g>
+  
+  <!-- Outer Ring - Slow reverse rotation -->
+  <circle cx="400" cy="400" r="280" 
+          class="outer-ring"
+          fill="none" 
+          stroke="url(#rainbowGradient)" 
+          stroke-width="2" 
+          opacity="0.4"/>
+  
+  <!-- Middle Ring - Medium rotation -->
+  <circle cx="400" cy="400" r="220" 
+          class="middle-ring"
+          fill="none" 
+          stroke="url(#strokeGradient)" 
+          stroke-width="3" 
+          opacity="0.5"/>
+  
+  <!-- Inner Ring - Fast reverse rotation -->
+  <circle cx="400" cy="400" r="160" 
+          class="inner-ring"
+          fill="none" 
+          stroke="#7b2ff7" 
+          stroke-width="2" 
+          opacity="0.6"/>
+  
+  <!-- Main Central Circle - Primary spinning element -->
+  <g class="main-circle">
+    <circle cx="400" cy="400" r="100" 
+            fill="url(#mainGradient)" 
+            stroke="url(#rainbowGradient)" 
+            stroke-width="6"/>
+  </g>
+  
+  <!-- Center Glow Effect -->
+  <circle cx="400" cy="400" r="80" 
+          class="center-glow"
+          fill="url(#glowGradient)" 
+          opacity="0.4"/>
+  
+  <!-- Decorative inner circles with scale animation -->
+  <circle cx="400" cy="400" r="60" 
+          class="scale-element"
+          fill="none" 
+          stroke="#00ffc8" 
+          stroke-width="1" 
+          opacity="0.5"/>
+  
+  <circle cx="400" cy="400" r="40" 
+          class="scale-element"
+          fill="none" 
+          stroke="#ff0080" 
+          stroke-width="1" 
+          opacity="0.5"
+          style="animation-delay: 0.5s;"/>
+  
+  <!-- Orbiting circles around the main circle -->
+  <g class="orbit-circle">
+    <circle cx="400" cy="400" r="15" 
+            fill="#00ffc8" 
+            filter="url(#glow)"/>
+  </g>
+  
+  <g class="orbit-circle" style="animation-delay: 1.25s;">
+    <circle cx="400" cy="400" r="12" 
+            fill="#7b2ff7" 
+            filter="url(#glow)"/>
+  </g>
+  
+  <g class="orbit-circle" style="animation-delay: 2.5s;">
+    <circle cx="400" cy="400" r="18" 
+            fill="#ff0080" 
+            filter="url(#glow)"/>
+  </g>
+  
+  <g class="orbit-circle" style="animation-delay: 3.75s;">
+    <circle cx="400" cy="400" r="10" 
+            fill="#00ffc8" 
+            filter="url(#glow)"/>
+  </g>
+  
+  <!-- Decorative stars in corners -->
+  <g class="star">
+    <use href="#starShape" x="100" y="100"/>
+  </g>
+  <g class="star">
+    <use href="#starShape" x="700" y="100"/>
+  </g>
+  <g class="star">
+    <use href="#starShape" x="100" y="700"/>
+  </g>
+  <g class="star">
+    <use href="#starShape" x="700" y="700"/>
+  </g>
+  
+  <!-- Central Text with rotation -->
+  <g class="rotating-text">
+    <text x="400" y="405" 
+          font-family="monospace" 
+          font-size="24" 
+          font-weight="bold"
+          fill="#00ffc8" 
+          text-anchor="middle"
+          opacity="0.9">
+      SPIN
+    </text>
+  </g>
+  
+  <!-- Title at top -->
+  <text x="400" y="80" 
+        font-family="monospace" 
+        font-size="36" 
+        font-weight="bold"
+        fill="url(#rainbowGradient)" 
+        text-anchor="middle"
+        filter="url(#glow)">
+    SVG ORBITAL ANIMATION
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="400" y="120" 
+        font-family="monospace" 
+        font-size="14" 
+        fill="#00ffc8" 
+        text-anchor="middle"
+        opacity="0.7">
+    Hover to activate animations
+  </text>
+  
+  <!-- Animated dash pattern on bottom border -->
+  <line x1="100" y1="750" x2="700" y2="750" 
+        stroke="url(#rainbowGradient)" 
+        stroke-width="2"
+        stroke-dasharray="10 5"
+        opacity="0.6">
+    <animate attributeName="stroke-dashoffset" 
+             from="0" 
+             to="30" 
+             dur="2s" 
+             repeatCount="indefinite"/>
+  </line>
+  
+</svg>
